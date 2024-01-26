@@ -11,12 +11,12 @@ def menu():
         print("1 - Add a new Value\n")
         print("2 - View the Current Value\n")
         print("3 - Write and Exit\n")
-        choix=int(input("Choise"))
+        choix=int(input("Choise\n"))
         if choix == 1 or choix == 2 or choix == 3:
             if choix == 1:
                 addvalue()
             elif choix == 2:
-                viewvalue()
+                viewvalue(value)
             else :
                 save_in_file(value)
                 exit()
