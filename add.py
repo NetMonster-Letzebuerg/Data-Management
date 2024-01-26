@@ -44,8 +44,7 @@ def typeofnetwork():
 
 def Create4G(networktype):
     ant=networktype+';'
-    mmc=input("MMC?\n")
-    mnc=input("MNC?\n")
+    mmcmnc=mmcmnccreator()
     ci=input("Cell indentity ?\n")
     tac=input("Tracking Area Code ? (Region sur CM)n")
     eNB=input("eNB ?\n")
@@ -59,13 +58,12 @@ def Create4G(networktype):
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
     loc="eNB ID "+eNB+" - LTE "+type4G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmc+";"+mnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
+    ant=ant+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
     return ant
 
 def Create3G(networktype):
     ant=networktype+';'
-    mmc=input("MMC?\n")
-    mnc=input("MNC?\n")
+    mmcmnc=mmcmnccreator()
     ci=input("Cell indentity ?\n")
     lac=input("Location area code ? (Region sur CM)n")
     rnc=input("RNC ?\n")
@@ -79,13 +77,12 @@ def Create3G(networktype):
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
     loc="3G "+type3G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmc+";"+mnc+";"+ci+";"+lac+";"+rnc+";"+pcs+";"+lat+";"+lon+";"+loc+";"+arfcn
+    ant=ant+mmcmnc+";"+ci+";"+lac+";"+rnc+";"+pcs+";"+lat+";"+lon+";"+loc+";"+arfcn
     return ant
 
 def Create2G(networktype):
     ant=networktype+';'
-    mmc=input("MMC?\n")
-    mnc=input("MNC?\n")
+    mmcmnc=mmcmnccreator()
     ci=input("Cell indentity ?\n")
     lac=input("Location Area Code ? (Region sur CM)n")
     eNB="XXX"
@@ -99,13 +96,12 @@ def Create2G(networktype):
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
     loc="2G "+type2G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmc+";"+mnc+";"+ci+";"+lac+";"+eNB+";"+bsic+";"+lat+";"+lon+";"+loc+";"+earfcn
+    ant=ant+mmcmnc+";"+ci+";"+lac+";"+eNB+";"+bsic+";"+lat+";"+lon+";"+loc+";"+earfcn
     return ant
 
 def Create5G(networktype):
     ant=networktype+";"
-    mmc=input("MMC?\n")
-    mnc=input("MNC?\n")
+    mmcmnc=mmcmnccreator()
     ci=input("Cell indentity ?\n")
     tac=input("Tracking Area Code ? (Region sur CM)n")
     eNB="XXX"
@@ -119,7 +115,7 @@ def Create5G(networktype):
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
     loc="5G NR "+type5G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmc+";"+mnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
+    ant=ant+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
     return ant
 
 def mmcmnccreator(): #Retourne les mmc/mnc de chaque Opérateur Luxembourgeois ---> A Adapté pour votre cas
