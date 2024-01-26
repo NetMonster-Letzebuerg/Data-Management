@@ -65,19 +65,39 @@ def Create3G(networktype):
     mmc=input("MMC?\n")
     mnc=input("MNC?\n")
     ci=input("Cell indentity ?\n")
-    tac=input("Tracking Area Code ? (Region sur CM)n")
-    eNB=input("eNB ?\n")
-    pci=input("PCI ?\n")
+    lac=input("Location area code ? (Region sur CM)n")
+    rnc=input("RNC ?\n")
+    pcs=input("PCS ?\n")
     lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
     lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
-    earfcn=input("earfcn")
+    arfcn=input("earfcn")
     address=input("Addresse (A prendre sur le cadastre)")
     type3G=input("Fréquence 3G")
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    loc="eNB ID "+eNB+" - 3G "+type3G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmc+";"+mnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
+    loc="3G "+type3G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
+    ant=ant+mmc+";"+mnc+";"+ci+";"+lac+";"+rnc+";"+pcs+";"+lat+";"+lon+";"+loc+";"+arfcn
+    return ant
+
+def Create2G(networktype):
+    ant=networktype+';'
+    mmc=input("MMC?\n")
+    mnc=input("MNC?\n")
+    ci=input("Cell indentity ?\n")
+    lac=input("Location Area Code ? (Region sur CM)n")
+    eNB="XXX"
+    bsic=input("BSIC ?\n")
+    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
+    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
+    earfcn=input("ARFCN")
+    address=input("Addresse (A prendre sur le cadastre)")
+    type2G=input("Fréquence 3G")
+    direction=input("Direction (S/N/E/O)")
+    directiondeg=input("Direction en °")+"°"
+    bp=input("Bande Passante en Hz")
+    loc="2G "+type2G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
+    ant=ant+mmc+";"+mnc+";"+ci+";"+lac+";"+eNB+";"+bsic+";"+lat+";"+lon+";"+loc+";"+earfcn
     return ant
 
 def addvalue():
@@ -88,4 +108,7 @@ def addvalue():
         value+=[antenna]
     elif typenet == "3G":
         antenna=Create3G(typenet)
+        value+=[antenna]
+    elif typenet == "2G":
+        antenna=Create2G(typenet)
         value+=[antenna]
