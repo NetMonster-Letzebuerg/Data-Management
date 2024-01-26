@@ -122,6 +122,26 @@ def Create5G(networktype):
     ant=ant+mmc+";"+mnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
     return ant
 
+def mmcmnccreator(): #Retourne les mmc/mnc de chaque Opérateur Luxembourgeois ---> A Adapté pour votre cas
+    inp=0
+    while 1<= inp <=5:
+        print("Merci de choisir l'opérateur\n")
+        print("1 - Tango")
+        print("2 - POST")
+        print("3 - Orange")
+        print("4 - Luxembourg Online (LOL)") #LOL est le diminutif de Luxembourg Online
+        inp=int(input("Votre choix"))
+    if inp == 1:
+        return "270;77" #mmc;mnc
+    elif inp == 2:
+        return "270;01"
+    elif inp == 3:
+        return "270;99"
+    elif inp == 4:
+        return "270;05"
+
+    
+
 def addvalue():
     global value
     typenet=typeofnetwork()
