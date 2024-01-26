@@ -48,15 +48,14 @@ def Create4G(networktype):
     tac=input("Tracking Area Code ? (Region sur CM)n")
     eNB=input("eNB ?\n")
     pci=input("PCI ?\n")
-    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
-    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
+    latlon=locinfo()
     earfcn=input("earfcn")
     address=input("Addresse (A prendre sur le cadastre)")
     type4G=input("Fréquence 4G")
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    return networktype+';'+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";eNB ID "+eNB+" - LTE "+type4G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
+    return networktype+';'+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+latlon+";eNB ID "+eNB+" - LTE "+type4G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
 
 def Create3G(networktype):
     mmcmnc=mmcmnccreator()
@@ -64,15 +63,14 @@ def Create3G(networktype):
     lac=input("Location area code ? (Region sur CM)n")
     rnc=input("RNC ?\n")
     pcs=input("PCS ?\n")
-    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
-    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
+    latlon=locinfo()
     arfcn=input("earfcn")
     address=input("Addresse (A prendre sur le cadastre)")
     type3G=input("Fréquence 3G")
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    return networktype+';'+mmcmnc+";"+ci+";"+lac+";"+rnc+";"+pcs+";"+lat+";"+lon+";"+"3G "+type3G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+arfcn
+    return networktype+';'+mmcmnc+";"+ci+";"+lac+";"+rnc+";"+pcs+";"+latlon+";"+"3G "+type3G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+arfcn
 
 def Create2G(networktype):
     mmcmnc=mmcmnccreator()
@@ -80,15 +78,14 @@ def Create2G(networktype):
     lac=input("Location Area Code ? (Region sur CM)n")
     eNB="XXX"
     bsic=input("BSIC ?\n")
-    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
-    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
+    latlon=locinfo()
     earfcn=input("ARFCN")
     address=input("Addresse (A prendre sur le cadastre)")
     type2G=input("Fréquence 3G")
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    return networktype+';'+mmcmnc+";"+ci+";"+lac+";"+eNB+";"+bsic+";"+lat+";"+lon+";"+"2G "+type2G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
+    return networktype+';'+mmcmnc+";"+ci+";"+lac+";"+eNB+";"+bsic+";"+latlon+";"+"2G "+type2G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
 
 def Create5G(networktype):
     mmcmnc=mmcmnccreator()
@@ -96,15 +93,14 @@ def Create5G(networktype):
     tac=input("Tracking Area Code ? (Region sur CM)n")
     eNB="XXX"
     pci=input("PCI ?\n")
-    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
-    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
+    latlon=locinfo()
     earfcn=input("ARFCN")
     address=input("Addresse (A prendre sur le cadastre)")
     type5G=input("Fréquence 5G")
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    return networktype+";"+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+"5G NR "+type5G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
+    return networktype+";"+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+latlon+";"+"5G NR "+type5G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
 
 def mmcmnccreator(): #Retourne les mmc/mnc de chaque Opérateur Luxembourgeois ---> A Adapté pour votre cas
     inp=0
@@ -124,6 +120,10 @@ def mmcmnccreator(): #Retourne les mmc/mnc de chaque Opérateur Luxembourgeois -
     elif inp == 4:
         return "270;05"
 
+def locinfo(): #Longitude/Latitude
+    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
+    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
+    return str(lat)+";"+str(lon)
     
 
 def addvalue():
