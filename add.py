@@ -5,6 +5,7 @@ print("-"*10+"\n")
 value=[]
 
 def menu():
+    global value
     choix=0
     while choix != 3 :
         print("1 - Add a new Value\n")
@@ -17,6 +18,7 @@ def menu():
             elif choix == 2:
                 viewvalue()
             else :
+                save_in_file(value)
                 exit()
     else :
         choix=0
@@ -100,6 +102,26 @@ def Create2G(networktype):
     ant=ant+mmc+";"+mnc+";"+ci+";"+lac+";"+eNB+";"+bsic+";"+lat+";"+lon+";"+loc+";"+earfcn
     return ant
 
+def Create5G(networktype):
+    ant=networktype+";"
+    mmc=input("MMC?\n")
+    mnc=input("MNC?\n")
+    ci=input("Cell indentity ?\n")
+    tac=input("Tracking Area Code ? (Region sur CM)n")
+    eNB="XXX"
+    pci=input("PCI ?\n")
+    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
+    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
+    earfcn=input("ARFCN")
+    address=input("Addresse (A prendre sur le cadastre)")
+    type5G=input("Fréquence 5G")
+    direction=input("Direction (S/N/E/O)")
+    directiondeg=input("Direction en °")+"°"
+    bp=input("Bande Passante en Hz")
+    loc="5G NR "+type5G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
+    ant=ant+mmc+";"+mnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
+    return ant
+
 def addvalue():
     global value
     typenet=typeofnetwork()
@@ -112,3 +134,18 @@ def addvalue():
     elif typenet == "2G":
         antenna=Create2G(typenet)
         value+=[antenna]
+    elif typenet == "5G":
+        antenna=Create2G(typenet)
+        value+=[antenna]
+
+def save_in_file(addtofile):
+    filename = add.csv
+    with open(filename, "w") as file:
+        for value in addtofile:
+            file.write(str(value) + "\n")
+
+def viewvalue(value):
+    for i in range(len(value)):
+        print(value[i]+"\n")
+
+menu()
