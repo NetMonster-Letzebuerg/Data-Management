@@ -33,17 +33,16 @@ def typeofnetwork():
     inp=int(input("Choice the type of network\n"))
     if inp == 1:
         return "2G"
-    if inp == 2:
+    elif inp == 2:
         return "3G"
-    if inp == 3:
+    elif inp == 3:
         return "4G"
-    if inp == 4:
+    elif inp == 4:
         return "5G"
-    if inp == 5:
+    elif inp == 5:
         return "CD2"
 
 def Create4G(networktype):
-    ant=networktype+';'
     mmcmnc=mmcmnccreator()
     ci=input("Cell indentity ?\n")
     tac=input("Tracking Area Code ? (Region sur CM)n")
@@ -57,12 +56,9 @@ def Create4G(networktype):
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    loc="eNB ID "+eNB+" - LTE "+type4G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
-    return ant
+    return networktype+';'+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";eNB ID "+eNB+" - LTE "+type4G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
 
 def Create3G(networktype):
-    ant=networktype+';'
     mmcmnc=mmcmnccreator()
     ci=input("Cell indentity ?\n")
     lac=input("Location area code ? (Region sur CM)n")
@@ -76,12 +72,9 @@ def Create3G(networktype):
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    loc="3G "+type3G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmcmnc+";"+ci+";"+lac+";"+rnc+";"+pcs+";"+lat+";"+lon+";"+loc+";"+arfcn
-    return ant
+    return networktype+';'+mmcmnc+";"+ci+";"+lac+";"+rnc+";"+pcs+";"+lat+";"+lon+";"+"3G "+type3G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+arfcn
 
 def Create2G(networktype):
-    ant=networktype+';'
     mmcmnc=mmcmnccreator()
     ci=input("Cell indentity ?\n")
     lac=input("Location Area Code ? (Region sur CM)n")
@@ -95,12 +88,9 @@ def Create2G(networktype):
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    loc="2G "+type2G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmcmnc+";"+ci+";"+lac+";"+eNB+";"+bsic+";"+lat+";"+lon+";"+loc+";"+earfcn
-    return ant
+    return networktype+';'+mmcmnc+";"+ci+";"+lac+";"+eNB+";"+bsic+";"+lat+";"+lon+";"+"2G "+type2G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
 
 def Create5G(networktype):
-    ant=networktype+";"
     mmcmnc=mmcmnccreator()
     ci=input("Cell indentity ?\n")
     tac=input("Tracking Area Code ? (Region sur CM)n")
@@ -114,18 +104,16 @@ def Create5G(networktype):
     direction=input("Direction (S/N/E/O)")
     directiondeg=input("Direction en °")+"°"
     bp=input("Bande Passante en Hz")
-    loc="5G NR "+type5G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address
-    ant=ant+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+loc+";"+earfcn
-    return ant
+    return networktype+";"+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+lat+";"+lon+";"+"5G NR "+type5G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
 
 def mmcmnccreator(): #Retourne les mmc/mnc de chaque Opérateur Luxembourgeois ---> A Adapté pour votre cas
     inp=0
     while 1<= inp <=5:
         print("Merci de choisir l'opérateur\n")
-        print("1 - Tango")
-        print("2 - POST")
-        print("3 - Orange")
-        print("4 - Luxembourg Online (LOL)") #LOL est le diminutif de Luxembourg Online
+        print("1 - Tango") #27077
+        print("2 - POST") #27001
+        print("3 - Orange") #27099
+        print("4 - Luxembourg Online (LOL)") #LOL est le diminutif de Luxembourg Online - 2705
         inp=int(input("Votre choix"))
     if inp == 1:
         return "270;77" #mmc;mnc
