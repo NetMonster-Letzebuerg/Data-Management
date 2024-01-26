@@ -11,7 +11,7 @@ def menu():
         print("1 - Add a new Value\n")
         print("2 - View the Current Value\n")
         print("3 - Write and Exit\n")
-        choix=input("Choise")
+        choix=int(input("Choise"))
         if choix == 1 or choix == 2 or choix == 3:
             if choix == 1:
                 addvalue()
@@ -30,7 +30,7 @@ def typeofnetwork():
     print("3- LTE\n")
     print("4- NR\n")
     print("5- CDMA")
-    inp=input("Choice the type of network\n")
+    inp=int(input("Choice the type of network\n"))
     if inp == 1:
         return "2G"
     if inp == 2:
@@ -139,7 +139,7 @@ def addvalue():
         value+=[antenna]
 
 def save_in_file(addtofile):
-    filename = add.csv
+    filename = "add.csv"
     with open(filename, "w") as file:
         for value in addtofile:
             file.write(str(value) + "\n")
