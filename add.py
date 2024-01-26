@@ -103,14 +103,13 @@ def Create5G(networktype):
     return networktype+";"+mmcmnc+";"+ci+";"+tac+";"+eNB+";"+pci+";"+latlon+";"+"5G NR "+type5G+" - "+direction+" "+directiondeg+" - "+bp+" - "+address+";"+earfcn
 
 def mmcmnccreator(): #Retourne les mmc/mnc de chaque Opérateur Luxembourgeois ---> A Adapté pour votre cas
-    inp=0
-    while 1<= inp <=5:
-        print("Merci de choisir l'opérateur\n")
-        print("1 - Tango") #27077
-        print("2 - POST") #27001
-        print("3 - Orange") #27099
-        print("4 - Luxembourg Online (LOL)") #LOL est le diminutif de Luxembourg Online - 2705
-        inp=int(input("Votre choix"))
+    global value
+    print("Merci de choisir l'opérateur\n")
+    print("1 - Tango") #27077
+    print("2 - POST") #27001
+    print("3 - Orange") #27099
+    print("4 - Luxembourg Online (LOL)") #LOL est le diminutif de Luxembourg Online - 2705
+    inp=int(input("Votre choix\n"))
     if inp == 1:
         return "270;77" #mmc;mnc
     elif inp == 2:
@@ -119,6 +118,9 @@ def mmcmnccreator(): #Retourne les mmc/mnc de chaque Opérateur Luxembourgeois -
         return "270;99"
     elif inp == 4:
         return "270;05"
+    else :
+        save_in_file(value)
+        exit()
 
 def locinfo(): #Longitude/Latitude
     lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)\n")
@@ -151,5 +153,4 @@ def save_in_file(addtofile):
 def viewvalue(value):
     for i in range(len(value)):
         print(value[i]+"\n")
-
 menu()
