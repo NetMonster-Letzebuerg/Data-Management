@@ -121,8 +121,8 @@ def mmcmnccreator(): #Retourne les mmc/mnc de chaque Opérateur Luxembourgeois -
         return "270;05"
 
 def locinfo(): #Longitude/Latitude
-    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)")
-    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)")
+    lat=input("Latitude (Coordonnée GPS A prendre sur le cadastre)\n")
+    lon=input("Longitude (Coordonnée GPS A prendre sur le cadastre)\n")
     return str(lat)+";"+str(lon)
     
 
