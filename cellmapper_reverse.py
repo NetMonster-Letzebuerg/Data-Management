@@ -25,3 +25,22 @@ def get_addr(lat,lon):
 		adr+=data['address']['city']+', '
 	adr+="Lëtzebuerg"
 	return adr
+
+def select_operator(): #Adapt for your country
+	print("|"+"-"*21+"|")
+	print("|Please select an ISP |")
+	print("|"+"-"*21+"|")
+	print("|1 - Tango            |")
+	print("|2 - Orange Luxembourg|")
+	print("|3 - POST             |")
+	print("|4 - Luxembourg Online|")
+	print("|"+"-"*21+"|")
+	choix=int(input("|Please made a choice |\n|"+"-"*21+"|\n"))
+	if choix == 1:
+		return "77"
+	elif choix == 2:
+		return "99"
+	elif choix == 3:
+		return "1"
+	elif choix == 4:
+		return "5"
