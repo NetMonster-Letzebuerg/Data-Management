@@ -44,3 +44,17 @@ def select_operator(): #Adapt for your country
 		return "1"
 	elif choix == 4:
 		return "5"
+
+def convert_tech_to_freq(band): #Convert LTE Band into Data
+	if band == 20 : #Utilisé par Tango
+		return '800Mhz B20'
+	elif band == 3 : #Utilisé par Tango
+		return '1800Mhz B3'
+	elif band == 28 : #Utilisé par Tango
+		return '700Mhz B28'
+	elif band == 7 : #Utilisé par Tango
+		return '2600Mhz B7'
+	elif band == 1: #Utilisé par Tango
+		return '2100Mhz B1'
+	elif band == 8: #Utilisé par Tango
+		return '900Mhz B8'
