@@ -4,9 +4,9 @@ import os
 import requests
 import time
 import random
-proxy{
-	'socks5://yourproxy:port'
-}
+socks5_proies[
+	'socks5://yourproxy:port',
+]
 
 def get_addr(lat,lon):
 	#print(lat,lon)
@@ -70,7 +70,8 @@ def convert_tech_to_freq(band): #Convert LTE Band into Data
 def get_data_from_cm(site_id,mnc,region):
 	url = f'https://api.cellmapper.net/v6/getTowerInformation?MCC=270&MNC={mnc}&Region={region}&Site={site_id}&RAT=LTE'
 	#print(url)
-	random_proxy = random.choice(socks5_proxies)
+	rnd_proxy_nb=random.randint(0,len(socks5_proies))
+	random_proxy = socks5_proxies[rnd_proxy_nb]
 	proxies = {
 		'http': random_proxy,
 		'https': random_proxy,
