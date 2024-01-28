@@ -4,11 +4,16 @@ import os
 import requests
 import time
 import random
+proxy{
+	'socks5://yourproxy:port'
+}
 
 def get_addr(lat,lon):
+	#print(lat,lon)
 	url = f'https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}' #Use OpenStreetMap API
 	response = requests.get(url)
 	data = response.json()
+	#print(data)
 	adr=''
 	if 'house_number' in data['address']:
 		adr+=data["address"]["house_number"]+', '
@@ -17,8 +22,9 @@ def get_addr(lat,lon):
 	if 'isolated_dwelling' in data['address']:
 		adr+=data["address"]["isolated_dwelling"]+', '
 	if 'village' in data['address']:
-		if data['address']["city"] != data["address"]["village"]:
-			adr+=data["address"]["village"]+', '
+		if 'city' in data['address']:
+			if data['address']["city"] != data["address"]["village"]:
+				adr+=data["address"]["village"]+', '
 	if 'postcode' in data["address"]:
 		adr+="L-"+data["address"]["postcode"]+' '
 	if 'city' in data['address']:
@@ -63,15 +69,24 @@ def convert_tech_to_freq(band): #Convert LTE Band into Data
 
 def get_data_from_cm(site_id,mnc,region):
 	url = f'https://api.cellmapper.net/v6/getTowerInformation?MCC=270&MNC={mnc}&Region={region}&Site={site_id}&RAT=LTE'
-	response = requests.get()
+	#print(url)
+	random_proxy = random.choice(socks5_proxies)
+	proxies = {
+		'http': random_proxy,
+		'https': random_proxy,
+	}
+	response = requests.get(url, proxies=proxies)
 	data = response.json()
+	#print(data)
 	pci_values = []
-	ci_values = list(data["cells"].keys())
+	cell_data = data['responseData']['cells']
+	#print(cell_data.keys())
+	ci_values = list(cell_data.keys())
 	bw = []
 	band = []
 	if 'cells' in data['responseData']:
 		cell_data = data['responseData']['cells']
-		for cell_info in cells_data.values():
+		for cell_info in cell_data.values():
 			pci_values.append(str(cell_info.get('PCI', '-')))
 	if 'estimatedBandData' in data['responseData']:
 		bd_data = data['responseData']['estimatedBandData']
@@ -90,20 +105,21 @@ def get_data_from_cm(site_id,mnc,region):
 
 def json_to_csv(json_file,csv_file):
 	print("Init")
-	mnc=select_operator()
 	with open(json_file, 'r') as json_file: #On récup la data du fichier json
 		data = json.load(json_file)
+		total_entries = len(data['responseData'])
 		
 		with open(csv_file, 'a', newline='', encoding='utf-8') as csv_file:
 			writer = csv.writer(csv_file, delimiter=';') #; car séparateur de netmonster
+			mnc=select_operator()
 			for index, entry in enumerate(data['responseData'], start=1):
 				enb = entry.get('siteID')
 				region = entry.get('regionID')
 				pci_values, ci_values, bw, band = [], [], [], []
+				pci_values, ci_values, bw, band = get_data_from_cm(enb,mnc,region)
 				print("Récupération des info depuis l'API")
 				if pci_values and ci_values:
 					print(f"Récupération OK pour {enb}")
-					pci_values, ci_values, bw, band = get_data_from_cm(enc,mnc,region)
 				else :
 					print(f"Aucune info dispo pour l'antenne en question ({enb})")
 					continue
@@ -114,21 +130,19 @@ def json_to_csv(json_file,csv_file):
 				mcc = "270"
 				tac = entry.get('regionID', '')
 				lat = entry.get('latitude', '')
-				lon = entry.get("lontitude", '')
+				lon = entry.get("longitude", '')
 				address = get_addr(lat,lon)
-				print(f"Valeur commune de l'antenne {enb}: RAT={rat_value}, MCC={mcc}, MNC={mnc}, TAC={tac}, Lat={lat}, Lon={lon}, Address={address}")
+				print(f"Valeur commune de l'antenne {enb}: RAT={rat_val}, MCC={mcc}, MNC={mnc}, TAC={tac}, Lat={lat}, Lon={lon}, Address={address}")
 				try :
 					earfcn_value = entry.get('channels', [])
 					for i in range(len(earfcn_value)):
 						rowcom ='eNB ID '+str(enb)+" - LTE "+str(band[i])+" - BP "+str(bw[i])+" - "+str(address)
-						row_data[rat_val, mmc, mnc, ci_values[i], tac, enb, pci_values[i], lat, lon, rowcom, earfcn_value[i]]
+						row_data=[rat_val, mnc, mnc, ci_values[i], tac, enb, pci_values[i], lat, lon, rowcom, earfcn_value[i]]
 						writer.writerow(row_data)
 						csv_file.flush()
-						pci_cellid_file.flush()
-						print(f"{index} fait")
 				except Exception as e:
 					print(f"CPT : {e}")
-
+				print(f"{index} fait")
 				print(f"Attente de {sleep_time:.2f} seconde")
 				time.sleep(sleep_time)
 	print("Finito")
