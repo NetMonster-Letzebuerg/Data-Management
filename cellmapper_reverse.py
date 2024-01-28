@@ -91,10 +91,10 @@ def get_data_from_cm(site_id,mnc,region):
 def json_to_csv(json_file,csv_file):
 	print("Init")
 	mnc=select_operator()
-	with open(input_json_file, 'r') as json_file: #On récup la data du fichier json
+	with open(json_file, 'r') as json_file: #On récup la data du fichier json
 		data = json.load(json_file)
 		
-		with open(output_csv_file, 'a', newline='', encoding='utf-8') as csv_file:
+		with open(csv_file, 'a', newline='', encoding='utf-8') as csv_file:
 			writer = csv.writer(csv_file, delimiter=';') #; car séparateur de netmonster
 			for index, entry in enumerate(data['responseData'], start=1):
 				enb = entry.get('siteID')
@@ -120,7 +120,7 @@ def json_to_csv(json_file,csv_file):
 				try :
 					earfcn_value = entry.get('channels', [])
 					for i in range(len(earfcn_value)):
-						rowcom ='eNB ID '+str(enb)+" - LTE "+str(band[i])" - BP "+str(bw[i])+" - "+str(address)
+						rowcom ='eNB ID '+str(enb)+" - LTE "+str(band[i])+" - BP "+str(bw[i])+" - "+str(address)
 						row_data[rat_val, mmc, mnc, ci_values[i], tac, enb, pci_values[i], lat, lon, rowcom, earfcn_value[i]]
 						writer.writerow(row_data)
 						csv_file.flush()
@@ -129,7 +129,7 @@ def json_to_csv(json_file,csv_file):
 				except Exception as e:
 					print(f"CPT : {e}")
 
-				print(f"Attente de {sleep_time.2f} seconde")
+				print(f"Attente de {sleep_time:.2f} seconde")
 				time.sleep(sleep_time)
 	print("Finito")
 
