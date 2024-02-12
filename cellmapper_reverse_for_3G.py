@@ -81,7 +81,7 @@ def get_data_from_cm(site_id,mnc,region):
 		for cell_info in cell_data.values():
 			typeof3g_value.append(str(cell_info.get('SubSystem', '-')))
 			rnc_values.append(str(cell_info.get('RNC','')))
-			psc_values.append(str(cell_info('RNC','')))
+			psc_values.append(str(cell_info.get('PSC','')))
 
 	return rnc_values, psc_values,ci_values,typeof3g_value
 
@@ -101,7 +101,7 @@ def json_to_csv(json_file,csv_file):
 				rnc_values, psc_values,ci_values,typeof3g_value = [], [], [], []
 				rnc_values, psc_values,ci_values,typeof3g_value = get_data_from_cm(enb,mnc,region)
 				print("Récupération des info depuis l'API")
-				if pci_values and ci_values:
+				if psc_values and ci_values:
 					print(f"Récupération OK pour {enb}")
 				else :
 					print(f"Aucune info dispo pour l'antenne en question ({enb})")
