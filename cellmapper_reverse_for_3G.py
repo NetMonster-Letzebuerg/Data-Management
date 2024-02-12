@@ -70,29 +70,20 @@ def get_data_from_cm(site_id,mnc,region):
 	response = requests.get(url, proxies=proxies)
 	data = response.json()
 	#print(data)
-	pci_values = []
+	rnc_values = []
+	psc_values = []
 	cell_data = data['responseData']['cells']
 	#print(cell_data.keys())
 	ci_values = list(cell_data.keys())
-	bw = []
-	band = []
+	typeof3g_value = []
 	if 'cells' in data['responseData']:
 		cell_data = data['responseData']['cells']
 		for cell_info in cell_data.values():
-			pci_values.append(str(cell_info.get('PCI', '-')))
-	if 'estimatedBandData' in data['responseData']:
-		bd_data = data['responseData']['estimatedBandData']
-		for i in range(len(bd_data)):
-			if 'bandWidth' in bd_data[i]:
-				if bd_data[i]['bandWidth'] == 0:
-					bw.append("Unk BP")
-				else :
-					bw.append(str(int(bd_data[i]['bandWidth']))+"MHz")
-			if 'bandNumber' in bd_data[i]:
-				band.append(convert_tech_to_freq(bd_data[i]['bandNumber']))
+			typeof3g_value.append(str(cell_info.get('SubSystem', '-')))
+			rnc_values.append(str(cell_info.get('RNC','')))
+			psc_values.append(str(cell_info('RNC','')))
 
-
-	return pci_values, ci_values, bw, band
+	return rnc_values, psc_values,ci_values,typeof3g_value
 
 
 def json_to_csv(json_file,csv_file):
@@ -107,8 +98,8 @@ def json_to_csv(json_file,csv_file):
 			for index, entry in enumerate(data['responseData'], start=1):
 				enb = entry.get('siteID')
 				region = entry.get('regionID')
-				pci_values, ci_values, bw, band = [], [], [], []
-				pci_values, ci_values, bw, band = get_data_from_cm(enb,mnc,region)
+				rnc_values, psc_values,ci_values,typeof3g_value = [], [], [], []
+				rnc_values, psc_values,ci_values,typeof3g_value = get_data_from_cm(enb,mnc,region)
 				print("Récupération des info depuis l'API")
 				if pci_values and ci_values:
 					print(f"Récupération OK pour {enb}")
@@ -118,7 +109,7 @@ def json_to_csv(json_file,csv_file):
 				sleep_time = random.uniform(1,2) #Pour éviter de PT l'API
 
 				print(f"Traitement de l'antenne {index} sur {total_entries}")
-				rat_val = entry.get('RAT', '').replace('UMTS', '3G')
+				rat_val = "3G"
 				mcc = "270"
 				tac = entry.get('regionID', '')
 				lat = entry.get('latitude', '')
@@ -128,8 +119,8 @@ def json_to_csv(json_file,csv_file):
 				try :
 					earfcn_value = entry.get('channels', [])
 					for i in range(len(earfcn_value)):
-						rowcom ='eNB ID '+str(enb)+" - LTE "+str(band[i])+" - BP "+str(bw[i])+" - "+str(address)
-						row_data=[rat_val, mcc, mnc, ci_values[i], tac, enb, pci_values[i], lat, lon, rowcom, earfcn_value[i]]
+						rowcom =str(typeof3g_value[i])+" - "+str(address)
+						row_data=[rat_val, mcc, mnc, ci_values[i], tac, rnc_values[i], psc_values[i], lat, lon, rowcom, earfcn_value[i]]
 						writer.writerow(row_data)
 						csv_file.flush()
 				except Exception as e:
