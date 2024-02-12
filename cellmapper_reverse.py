@@ -4,8 +4,8 @@ import os
 import requests
 import time
 import random
-socks5_proies[
-	'socks5://yourproxy:port',
+socks5_proxies=[
+	'',
 ]
 
 def get_addr(lat,lon):
@@ -70,8 +70,9 @@ def convert_tech_to_freq(band): #Convert LTE Band into Data
 def get_data_from_cm(site_id,mnc,region):
 	url = f'https://api.cellmapper.net/v6/getTowerInformation?MCC=270&MNC={mnc}&Region={region}&Site={site_id}&RAT=LTE'
 	#print(url)
-	rnd_proxy_nb=random.randint(0,len(socks5_proies))
-	random_proxy = socks5_proxies[rnd_proxy_nb]
+	rnd_proxy_nb=random.randint(0,len(socks5_proxies))
+	random_proxy = random.choice(socks5_proxies)
+	print(f"Proxy utilisé : {random_proxy}")
 	proxies = {
 		'http': random_proxy,
 		'https': random_proxy,
@@ -138,7 +139,7 @@ def json_to_csv(json_file,csv_file):
 					earfcn_value = entry.get('channels', [])
 					for i in range(len(earfcn_value)):
 						rowcom ='eNB ID '+str(enb)+" - LTE "+str(band[i])+" - BP "+str(bw[i])+" - "+str(address)
-						row_data=[rat_val, mnc, mnc, ci_values[i], tac, enb, pci_values[i], lat, lon, rowcom, earfcn_value[i]]
+						row_data=[rat_val, mcc, mnc, ci_values[i], tac, enb, pci_values[i], lat, lon, rowcom, earfcn_value[i]]
 						writer.writerow(row_data)
 						csv_file.flush()
 				except Exception as e:
@@ -149,4 +150,4 @@ def json_to_csv(json_file,csv_file):
 	print("Finito")
 
 if __name__ == "__main__":
-	json_to_csv("data.json","tango.csv")
+	json_to_csv("data.json","operator.csv")
