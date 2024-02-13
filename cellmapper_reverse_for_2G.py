@@ -58,7 +58,7 @@ def convert_tech_to_freq(band): #Convert LTE Band into Data
 		return "Unk Band"
 
 def get_data_from_cm(site_id,mnc,region):
-	url = f'https://api.cellmapper.net/v6/getTowerInformation?MCC=270&MNC={mnc}&Region={region}&Site={site_id}&RAT=UMTS' #UMTS pour la 3G
+	url = f'https://api.cellmapper.net/v6/getTowerInformation?MCC=270&MNC={mnc}&Region={region}&Site={site_id}&RAT=GSM' #GSM pour la 2G
 	#print(url)
 	rnd_proxy_nb=random.randint(0,len(socks5_proxies))
 	random_proxy = random.choice(socks5_proxies)
@@ -107,7 +107,7 @@ def json_to_csv(json_file,csv_file):
 				sleep_time = random.uniform(1,2) #Pour éviter de PT l'API
 
 				print(f"Traitement de l'antenne {index} sur {total_entries}")
-				rat_val = "3G"
+				rat_val = "2G"
 				mcc = "270"
 				tac = entry.get('regionID', '')
 				lat = entry.get('latitude', '')
