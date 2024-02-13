@@ -96,7 +96,7 @@ def json_to_csv(json_file,csv_file):
 			for index, entry in enumerate(data['responseData'], start=1):
 				enb = entry.get('siteID')
 				region = entry.get('regionID')
-				bsic_values,ci_values,typeof2g_value = [], [], [], []
+				bsic_values,ci_values,typeof2g_value = [], [], []
 				bsic_values,ci_values,typeof2g_value = get_data_from_cm(enb,mnc,region)
 				print("Récupération des info depuis l'API")
 				if bsic_values and ci_values:
