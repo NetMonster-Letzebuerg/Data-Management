@@ -14,6 +14,8 @@ def get_addr(lat,lon):
 	response = requests.get(url)
 	data = response.json()
 	#print(data)
+	if 'display_name' in data:
+		return data["display_name"]
 	adr=''
 	if 'house_number' in data['address']:
 		adr+=data["address"]["house_number"]+', '
