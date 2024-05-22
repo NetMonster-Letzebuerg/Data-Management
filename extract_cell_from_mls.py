@@ -1,5 +1,5 @@
-filename="Yourfilename" #It's a CSV file
-mmc, mnc =0,0
+filename="MLS-full-cell-export-final.csv" #It's a CSV file
+mmc, mnc =270,77 #Tango
 cell2g, cell3g, cell4g= 0,0,0
 to_export=[]
 def techno(cell):
@@ -39,9 +39,12 @@ def return_data():
 
 def check(filename):
     try :
+        count=0
         with open(filename, 'r') as file:
             for line in file:
-                check_carrier(line.strip)
+                check_carrier(line.strip())
+                count+=1
+                print(f"Check line {count}")
         return_data()   
     except FileNotFoundError:
         print(f"The file {filename} is not found")
