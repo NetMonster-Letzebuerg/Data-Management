@@ -8,7 +8,7 @@ url_file="https://voxhost.fr/MLS-full-cell-export-final.csv.gz" #Hosted in Cloud
 #If you want to made a mirror without using the Archive.org link, you can use this link (https://www.mediafire.com/file/yxpdql0ebho4pc0/MLS-full-cell-export-final.csv.gz/file or https://pixeldrain.com/u/k1TNyYvv) and made a mirror of the file youself of a different hoster with direct link support
 #Or you can use it localy if you have the file already downloaded in the same directory as this script
 #just change the "localy" variable to True
-localy=True
+localy=False
 
 mmc, mnc =270,77 #Tango
 cell2g, cell3g, cell4g= 0,0,0
