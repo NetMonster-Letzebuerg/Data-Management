@@ -8,7 +8,7 @@ url_file="https://voxhost.fr/MLS-full-cell-export-final.csv.gz" #Hosted in Cloud
 #If you want to made a mirror without using the Archive.org link, you can use this link (https://www.mediafire.com/file/yxpdql0ebho4pc0/MLS-full-cell-export-final.csv.gz/file or https://pixeldrain.com/u/k1TNyYvv) and made a mirror of the file youself of a different hoster with direct link support
 #Or you can use it localy if you have the file already downloaded in the same directory as this script
 #just change the "localy" variable to True
-localy=False
+localy=True
 
 mmc, mnc =270,77 #Tango
 cell2g, cell3g, cell4g= 0,0,0
@@ -53,6 +53,7 @@ def techno(cell):
 def check_carrier(cell):
     global cell2g, cell3g, cell4g
     type_network=techno(cell)
+    print(f"Checking {cell} - {type_network}")
     if type_network == "2g" or type_network == "4g":
         decal=4
     elif type_network == "3g":
@@ -79,15 +80,19 @@ def check(filename):
         count=0
         with open(filename, 'r') as file:
             for line in file:
-                check_carrier(line.strip())
-                count+=1
-                print(f"Check line {count}")
+                if count<1:
+                    count+=1
+                    continue
+                else:
+                    check_carrier(line.strip())
+                    count+=1
+                    print(f"Check line {count}")
         return_data()   
     except FileNotFoundError:
         print(f"The file {filename} is not found")
     except IOError:
         print("An I/O Error occured")
-
-download_file(url_file)
-extract_file()
+if localy == False:
+    download_file(url_file)
+    extract_file()
 check(filename)
