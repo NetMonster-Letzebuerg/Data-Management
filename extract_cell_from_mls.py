@@ -16,9 +16,21 @@ to_export=[]
 def download_file(url):
     print("Downloading file")
     with requests.get(url, stream=True) as r:
-        with open("MLS-full-cell-export-final.csv.gz", "wb") as f:
-            shutil.copyfileobj(r.raw, f)
-    print(f"Downloaded from {url}")
+        total_length = r.headers.get('content-length')
+        if total_length is None:  # no content length header
+            with open("MLS-full-cell-export-final.csv.gz", "wb") as f:
+                shutil.copyfileobj(r.raw, f)
+        else:
+            total_length = int(total_length)
+            with open("MLS-full-cell-export-final.csv.gz", "wb") as f:
+                downloaded = 0
+                for chunk in r.iter_content(chunk_size=4096):
+                    if chunk:
+                        f.write(chunk)
+                        downloaded += len(chunk)
+                        done = int(50 * downloaded / total_length)
+                        print(f"\r[{'=' * done}{' ' * (50-done)}] {done * 2}%", end='')
+    print(f"\nDownloaded from {url}")
 
 def extract_file():
     print("Extracting file")
@@ -76,4 +88,6 @@ def check(filename):
     except IOError:
         print("An I/O Error occured")
 
+download_file(url_file)
+extract_file()
 check(filename)
