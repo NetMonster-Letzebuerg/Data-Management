@@ -1,7 +1,32 @@
+import requests
+import gzip
+import shutil
+
 filename="MLS-full-cell-export-final.csv" #It's a CSV file
+#url_file="https://archive.org/download/Mozilla_Location_Services_Archive/Final%20Export/MLS-full-cell-export-final.csv.gz" #Hosted in Archive.org - No Expiration Date
+url_file="https://voxhost.fr/MLS-full-cell-export-final.csv.gz" #Hosted in Cloudflare -No Expiration Date
+#If you want to made a mirror without using the Archive.org link, you can use this link (https://www.mediafire.com/file/yxpdql0ebho4pc0/MLS-full-cell-export-final.csv.gz/file or https://pixeldrain.com/u/k1TNyYvv) and made a mirror of the file youself of a different hoster with direct link support
+#Or you can use it localy if you have the file already downloaded in the same directory as this script
+#just change the "localy" variable to True
+localy=False
+
 mmc, mnc =270,77 #Tango
 cell2g, cell3g, cell4g= 0,0,0
 to_export=[]
+def download_file(url):
+    print("Downloading file")
+    with requests.get(url, stream=True) as r:
+        with open("MLS-full-cell-export-final.csv.gz", "wb") as f:
+            shutil.copyfileobj(r.raw, f)
+    print(f"Downloaded from {url}")
+
+def extract_file():
+    print("Extracting file")
+    with gzip.open("MLS-full-cell-export-final.csv.gz", 'rb') as f_in:
+        with open('MLS-full-cell-export-final.csv', 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)
+    print("Extracted")
+
 def techno(cell):
     global cell2g, cell3g, cell4g
     if cell[:3] == "GSM":
