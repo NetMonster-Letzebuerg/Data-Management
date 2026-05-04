@@ -44,8 +44,8 @@ def typeofnetwork():
 
 def Create4G(networktype):
     mmcmnc=mmcmnccreator()
-    ci=input("Cell indentity ?\n")
-    tac=input("Tracking Area Code ? (Region sur CM)n")
+    ci=input("Cell n° ?\n")
+    tac=input("Tracking Area Code ? (Region sur CM)\n")
     eNB=input("eNB ?\n")
     pci=input("PCI ?\n")
     latlon=locinfo()
